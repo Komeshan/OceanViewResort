@@ -1,10 +1,8 @@
 package controller;
 
-import jakarta.servlet.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import jakarta.servlet.ServletException;
-
 import model.Reservation;
 import service.ReservationService;
 
@@ -18,21 +16,23 @@ public class ReservationServlet extends HttpServlet {
     private ReservationService service = new ReservationService();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        // ---- SESSION CHECK ----
+        // ----- SESSION CHECK -----
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("username") == null) {
-            response.sendRedirect("login.html");
+            response.sendRedirect("login.html"); // User not logged in
             return;
         }
 
-        // ---- RESERVATION HANDLING ----
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        out.println("Servlet reached!<br>");
+        out.println("<h1>Reservation Page</h1>");
+        out.println("<a href='ViewReservationsServlet'>View All Reservations</a> | ");
+        out.println("<a href='LogoutServlet'>Logout</a><br><br>");
 
         Reservation r = new Reservation();
 
@@ -45,13 +45,12 @@ public class ReservationServlet extends HttpServlet {
 
         boolean result = service.createReservation(r);
 
-        if (result) {
+        if(result){
             out.println("<h2>Reservation Saved!</h2>");
-            out.println("<a href='ViewReservationsServlet'>View All Reservations</a><br>");
-            out.println("<a href='LogoutServlet'>Logout</a>");
         } else {
             out.println("<h2>Error Saving Reservation</h2>");
-            out.println("<a href='Reservation.html'>Try Again</a>");
         }
+
+        out.println("<a href='Reservation.html'>Make Another Reservation</a>");
     }
 }
