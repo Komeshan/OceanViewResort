@@ -1,10 +1,11 @@
 package controller;
 
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
 import model.Reservation;
 import service.ReservationService;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,11 @@ public class ReservationServlet extends HttpServlet {
                           HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Create reservation object from form
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("Servlet reached!"); // Debug
+
         Reservation r = new Reservation();
         r.setGuestName(request.getParameter("name"));
         r.setAddress(request.getParameter("address"));
@@ -30,12 +35,8 @@ public class ReservationServlet extends HttpServlet {
 
         boolean result = service.createReservation(r);
 
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
-        if (result) {
-            out.println("<h2>Reservation Saved!</h2>");
-            out.println("<p>Total Amount: " + r.getTotalAmount() + "</p>");
+        if(result){
+            out.println("<h2>Reservation Saved! Total: " + r.getTotalAmount() + "</h2>");
         } else {
             out.println("<h2>Error Saving Reservation</h2>");
         }
