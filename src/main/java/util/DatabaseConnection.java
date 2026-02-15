@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     private static Connection connection = null;
 
-    private DatabaseConnection() { }
+    private DatabaseConnection() {}
 
     public static Connection getInstance() {
         if (connection == null) {
