@@ -108,4 +108,20 @@ public class ReservationDAO {
             return false;
         }
     }
+
+    public boolean deleteReservation(int reservationId) {
+        String sql = "DELETE FROM Reservations WHERE reservation_id = ?";
+        try {
+            Connection conn = DatabaseConnection.getInstance();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, reservationId);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
