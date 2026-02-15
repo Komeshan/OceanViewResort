@@ -1,9 +1,8 @@
 package controller;
 
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import jakarta.servlet.ServletException;
-
 import model.Reservation;
 import service.ReservationService;
 
@@ -20,8 +19,8 @@ public class ReservationServlet extends HttpServlet {
                           HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Create reservation object from form
         Reservation r = new Reservation();
-
         r.setGuestName(request.getParameter("name"));
         r.setAddress(request.getParameter("address"));
         r.setContact(request.getParameter("contact"));
@@ -34,8 +33,9 @@ public class ReservationServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        if(result){
+        if (result) {
             out.println("<h2>Reservation Saved!</h2>");
+            out.println("<p>Total Amount: " + r.getTotalAmount() + "</p>");
         } else {
             out.println("<h2>Error Saving Reservation</h2>");
         }

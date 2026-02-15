@@ -10,11 +10,9 @@ import java.sql.SQLException;
 public class ReservationDAO {
 
     public boolean addReservation(Reservation r) {
-
         String sql = "INSERT INTO Reservations " +
-                "(guest_name,address,contact,room_type,check_in,check_out) " +
-                "VALUES (?,?,?,?,?,?)";
-
+                "(guest_name, address, contact_no, room_type, checkin_date, checkout_date, total_amount) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection conn = DatabaseConnection.getInstance();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -25,6 +23,7 @@ public class ReservationDAO {
             stmt.setString(4, r.getRoomType());
             stmt.setDate(5, java.sql.Date.valueOf(r.getCheckIn()));
             stmt.setDate(6, java.sql.Date.valueOf(r.getCheckOut()));
+            stmt.setInt(7, r.getTotalAmount()); // ✅ totalAmount parameter
 
             stmt.executeUpdate();
             return true;
