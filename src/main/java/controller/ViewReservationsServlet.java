@@ -20,6 +20,12 @@ public class ViewReservationsServlet extends HttpServlet {
                          HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("username") == null) {
+            response.sendRedirect("login.html");
+            return;
+        }
+
         List<Reservation> reservations = service.getAllReservations();
 
         response.setContentType("text/html");
