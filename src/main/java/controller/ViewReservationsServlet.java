@@ -64,7 +64,8 @@ public class ViewReservationsServlet extends HttpServlet {
                 out.println("<td>" + r.getCheckIn() + "</td>");
                 out.println("<td>" + r.getCheckOut() + "</td>");
                 out.println("<td>" + r.getTotalAmount() + "</td>");
-                out.println("<td><a href='EditReservationServlet?id=" + r.getReservationId() + "'>Edit</a></td>");
+                out.println("<td><a href='EditReservationServlet?id=" + r.getReservationId() + "'>Edit</a> | " +
+                        "<a href='DeleteReservationServlet?id=" + r.getReservationId() + "' onclick=\"return confirm('Are you sure?');\">Delete</a></td>");
                 out.println("</tr>");
             }
 
