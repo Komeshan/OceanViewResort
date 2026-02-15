@@ -4,9 +4,7 @@ import util.DatabaseConnection;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -37,9 +35,12 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                out.println("<h2>Login Successful! Welcome " + username + "</h2>");
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                response.sendRedirect("ViewReservationsServlet");
             } else {
                 out.println("<h2>Login Failed! Invalid username or password</h2>");
+                out.println("<a href='login.html'>Try Again</a>");
             }
 
         } catch (SQLException e) {
