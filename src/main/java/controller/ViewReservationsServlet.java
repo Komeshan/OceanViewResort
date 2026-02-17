@@ -9,8 +9,6 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/ViewReservationsServlet")
@@ -22,27 +20,67 @@ public class ViewReservationsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // ----- SESSION CHECK -----
+        // SESSION CHECK
         HttpSession session = request.getSession(false);
+
         if (session == null || session.getAttribute("username") == null) {
-            response.sendRedirect("login.html"); // User not logged in
+            response.sendRedirect("login.html");
             return;
         }
+
+        // Get search values
+        String name = request.getParameter("name");
+        String room = request.getParameter("room");
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+
+        if (name == null) name = "";
+        if (room == null) room = "";
+        if (from == null) from = "2000-01-01";
+        if (to == null) to = "2100-12-31";
+
+        List<Reservation> reservations =
+                dao.searchReservations(name, room, from, to);
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
+        // HEADER
         out.println("<h1>All Reservations</h1>");
-        out.println("<a href='/OceanViewResortSystem/reservation.html'>Make New Reservation</a> | ");
-        out.println("<a href='/OceanViewResortSystem/'>Logout</a><br><br>");
 
-        // Get reservations from DAO
-        List<Reservation> reservations = dao.getAllReservations();
+        out.println("<a href='/OceanViewResortSystem/reservation.html'>New Reservation</a> | ");
+        out.println("<a href='/OceanViewResortSystem/LogoutServlet'>Logout</a><br><br>");
 
+        // SEARCH FORM
+        out.println("<form method='get' action='ViewReservationsServlet'>");
+
+        out.println("Guest Name: ");
+        out.println("<input type='text' name='name'> ");
+
+        out.println("Room: ");
+        out.println("<select name='room'>");
+        out.println("<option value=''>All</option>");
+        out.println("<option value='Single'>Single</option>");
+        out.println("<option value='Double'>Double</option>");
+        out.println("<option value='Suite'>Suite</option>");
+        out.println("</select> ");
+
+        out.println("From: <input type='date' name='from'> ");
+        out.println("To: <input type='date' name='to'> ");
+
+        out.println("<input type='submit' value='Search'>");
+
+        out.println("</form><br>");
+
+        // TABLE
         if (reservations.isEmpty()) {
-            out.println("<h3>No reservations found.</h3>");
+
+            out.println("<h3>No results found.</h3>");
+
         } else {
+
             out.println("<table border='1'>");
+
             out.println("<tr>");
             out.println("<th>ID</th>");
             out.println("<th>Guest</th>");
@@ -55,7 +93,9 @@ public class ViewReservationsServlet extends HttpServlet {
             out.println("</tr>");
 
             for (Reservation r : reservations) {
+
                 out.println("<tr>");
+
                 out.println("<td>" + r.getReservationId() + "</td>");
                 out.println("<td>" + r.getGuestName() + "</td>");
                 out.println("<td>" + r.getAddress() + "</td>");
@@ -64,8 +104,7 @@ public class ViewReservationsServlet extends HttpServlet {
                 out.println("<td>" + r.getCheckIn() + "</td>");
                 out.println("<td>" + r.getCheckOut() + "</td>");
                 out.println("<td>" + r.getTotalAmount() + "</td>");
-                out.println("<td><a href='EditReservationServlet?id=" + r.getReservationId() + "'>Edit</a> | " +
-                        "<a href='DeleteReservationServlet?id=" + r.getReservationId() + "' onclick=\"return confirm('Are you sure?');\">Delete</a></td>");
+
                 out.println("</tr>");
             }
 
