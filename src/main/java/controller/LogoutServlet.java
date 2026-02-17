@@ -21,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
         }
 
         // Redirect to login page after logout
-        response.sendRedirect(request.getContextPath() + "/login.html");
+        response.sendRedirect(request.getContextPath() + "/index.html");
     }
 
     // Optional: Handle POST too

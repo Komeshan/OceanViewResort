@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Make Reservation</title>
+
+    <script>
+        function setMinDates() {
+            let today = new Date().toISOString().split("T")[0];
+
+            document.getElementById("checkIn").min = today;
+            document.getElementById("checkOut").min = today;
+        }
+
+        function updateCheckoutMin() {
+            let checkInDate = document.getElementById("checkIn").value;
+
+            if (checkInDate) {
+                document.getElementById("checkOut").min = checkInDate;
+            }
+        }
+    </script>
+
+</head>
+
+<body onload="setMinDates()">
+
+<h2>Make Reservation</h2>
+
+<form action="ReservationServlet" method="post">
+
+    Name:
+    <input type="text" name="name" required><br><br>
+
+    Address:
+    <input type="text" name="address" required><br><br>
+
+    Contact:
+    <input type="text" name="contact" required><br><br>
+
+    Room Type:
+    <select name="room" required>
+        <option value="Single">Single</option>
+        <option value="Double">Double</option>
+        <option value="Suite">Suite</option>
+    </select><br><br>
+
+    Check-In:
+    <input type="date"
+           name="in"
+           id="checkIn"
+           onchange="updateCheckoutMin()"
+           required><br><br>
+
+    Check-Out:
+    <input type="date"
+           name="out"
+           id="checkOut"
+           required><br><br>
+
+    <input type="submit" value="Reserve">
+
+</form>
+
+</body>
+</html>
