@@ -32,6 +32,11 @@ public class ReservationServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
+        out.println("<html><head>");
+        out.println("<title>All Reservations</title>");
+        out.println("<link rel='stylesheet' type='text/css' href='" + request.getContextPath() + "/css/style.css'>");
+        out.println("</head><body>");
+
         out.println("<h1>Reservation Page</h1>");
         out.println("<a href='ViewReservationsServlet'>View All Reservations</a> | ");
         out.println("<a href='" + request.getContextPath() + "/LogoutServlet'>Logout</a><br><br>");
@@ -77,5 +82,8 @@ public class ReservationServlet extends HttpServlet {
         }
 
         out.println("<a href='Reservation.html'>Make Another Reservation</a>");
+
+        out.println("</body></html>");
     }
+
 }

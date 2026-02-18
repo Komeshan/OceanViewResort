@@ -30,20 +30,28 @@ public class ViewReservationsServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
+        out.println("<!DOCTYPE html>");
+        out.println("<html><head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<title>All Reservations</title>");
+        out.println("<link rel='stylesheet' type='text/css' href='" + request.getContextPath() + "/css/style.css'>");
+        out.println("</head><body>");
+
         out.println("<h1>All Reservations</h1>");
 
         // LINKS
-        out.println("<a href='Reservation.html'>Make New Reservation</a> | ");
-        out.println("<a href='" + request.getContextPath() + "/LogoutServlet'>Logout</a><br><br>");
+        out.println("<a href='Reservation.html'>Make New Reservation</a>");
+        out.println("<a href='help.html'>Help</a>");
+        out.println("<a href='" + request.getContextPath() + "/LogoutServlet'>Logout</a>");
 
         // SEARCH FORM
         out.println("<form action='ViewReservationsServlet' method='get'>");
-        out.println("Name: <input type='text' name='name'> ");
-        out.println("Room: <input type='text' name='room'> ");
-        out.println("Check-In: <input type='date' name='in'> ");
-        out.println("Check-Out: <input type='date' name='out'> ");
+        out.println("Name: <input type='text' name='name'>");
+        out.println("Room: <input type='text' name='room'>");
+        out.println("Check-In: <input type='date' name='in'>");
+        out.println("Check-Out: <input type='date' name='out'>");
         out.println("<input type='submit' value='Search'>");
-        out.println("</form><br>");
+        out.println("</form>");
 
         // GET SEARCH PARAMETERS
         String name = request.getParameter("name");
@@ -53,7 +61,6 @@ public class ViewReservationsServlet extends HttpServlet {
 
         List<Reservation> reservations;
 
-        // SEARCH OR ALL
         if ((name != null && !name.isEmpty()) ||
                 (room != null && !room.isEmpty()) ||
                 (checkIn != null && !checkIn.isEmpty()) ||
@@ -65,11 +72,11 @@ public class ViewReservationsServlet extends HttpServlet {
             reservations = dao.getAllReservations();
         }
 
-        // DISPLAY
+        // DISPLAY TABLE
         if (reservations.isEmpty()) {
             out.println("<h3>No reservations found.</h3>");
         } else {
-            out.println("<table border='1'>");
+            out.println("<table>");
             out.println("<tr>");
             out.println("<th>ID</th>");
             out.println("<th>Guest</th>");
@@ -101,5 +108,7 @@ public class ViewReservationsServlet extends HttpServlet {
 
             out.println("</table>");
         }
+
+        out.println("</body></html>");
     }
 }
