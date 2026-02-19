@@ -37,30 +37,37 @@ public class ViewReservationsServlet extends HttpServlet {
         out.println("<link rel='stylesheet' type='text/css' href='" + request.getContextPath() + "/css/style.css'>");
         out.println("</head><body>");
 
-        out.println("<h1>All Reservations</h1>");
-
-        // LINKS
-        out.println("<a href='Reservation.html'>Make New Reservation</a>");
+        // ---------------- Header / Navbar ----------------
+        out.println("<header>");
+        out.println("<h1>Ocean View Resort</h1>");
+        out.println("<nav>");
+        out.println("<a href='Reservation.html'>New Reservation</a>");
         out.println("<a href='help.html'>Help</a>");
-        out.println("<a href='" + request.getContextPath() + "/LogoutServlet'>Logout</a>");
+        out.println("<a href='LogoutServlet'>Logout</a>");
+        out.println("</nav>");
+        out.println("</header>");
 
-        // SEARCH FORM
-        out.println("<form action='ViewReservationsServlet' method='get'>");
-        out.println("Name: <input type='text' name='name'>");
-        out.println("Room: <input type='text' name='room'>");
-        out.println("Check-In: <input type='date' name='in'>");
-        out.println("Check-Out: <input type='date' name='out'>");
+        out.println("<div class='view-container'>");
+
+        // ---------------- Page Title & Make New Reservation ----------------
+        out.println("<h2 class='view-title'>All Reservations</h2>");
+
+        // ---------------- Search Form ----------------
+        out.println("<form class='search-form' action='ViewReservationsServlet' method='get'>");
+        out.println("<input type='text' name='name' placeholder='Guest Name'>");
+        out.println("<input type='text' name='room' placeholder='Room Type'>");
+        out.println("<input type='date' name='in' placeholder='Check-In'>");
+        out.println("<input type='date' name='out' placeholder='Check-Out'>");
         out.println("<input type='submit' value='Search'>");
         out.println("</form>");
 
-        // GET SEARCH PARAMETERS
+        // ---------------- Get Search Parameters ----------------
         String name = request.getParameter("name");
         String room = request.getParameter("room");
         String checkIn = request.getParameter("in");
         String checkOut = request.getParameter("out");
 
         List<Reservation> reservations;
-
         if ((name != null && !name.isEmpty()) ||
                 (room != null && !room.isEmpty()) ||
                 (checkIn != null && !checkIn.isEmpty()) ||
@@ -72,21 +79,14 @@ public class ViewReservationsServlet extends HttpServlet {
             reservations = dao.getAllReservations();
         }
 
-        // DISPLAY TABLE
+        // ---------------- Display Table ----------------
         if (reservations.isEmpty()) {
             out.println("<h3>No reservations found.</h3>");
         } else {
             out.println("<table>");
             out.println("<tr>");
-            out.println("<th>ID</th>");
-            out.println("<th>Guest</th>");
-            out.println("<th>Address</th>");
-            out.println("<th>Contact</th>");
-            out.println("<th>Room</th>");
-            out.println("<th>Check-In</th>");
-            out.println("<th>Check-Out</th>");
-            out.println("<th>Total</th>");
-            out.println("<th>Actions</th>");
+            out.println("<th>ID</th><th>Guest</th><th>Address</th><th>Contact</th>");
+            out.println("<th>Room</th><th>Check-In</th><th>Check-Out</th><th>Total</th><th>Actions</th>");
             out.println("</tr>");
 
             for (Reservation r : reservations) {
@@ -100,15 +100,16 @@ public class ViewReservationsServlet extends HttpServlet {
                 out.println("<td>" + r.getCheckOut() + "</td>");
                 out.println("<td>" + r.getTotalAmount() + "</td>");
                 out.println("<td>");
-                out.println("<a href='EditReservationServlet?id=" + r.getReservationId() + "'>Edit</a> | ");
-                out.println("<a href='DeleteReservationServlet?id=" + r.getReservationId() + "'>Delete</a>");
+                out.println("<a href='EditReservationServlet?id=" + r.getReservationId() + "' class='btn-small btn-edit'>Edit</a>");
+                out.println("<a href='DeleteReservationServlet?id=" + r.getReservationId() + "' class='btn-small btn-delete'>Delete</a>");
                 out.println("</td>");
                 out.println("</tr>");
             }
-
             out.println("</table>");
         }
 
+        out.println("</div>"); // end container
         out.println("</body></html>");
     }
+
 }

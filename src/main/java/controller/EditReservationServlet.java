@@ -35,50 +35,53 @@ public class EditReservationServlet extends HttpServlet {
             return;
         }
 
-        // Show pre-filled form
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<h1>Edit Reservation</h1>");
+
+        out.println("<!DOCTYPE html>");
+        out.println("<html><head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<title>Edit Reservation</title>");
+        out.println("<link rel='stylesheet' type='text/css' href='" + request.getContextPath() + "/css/style.css'>");
+        out.println("</head><body>");
+
+        // ---------------- Header / Navbar ----------------
+        out.println("<header>");
+        out.println("<h1>Ocean View Resort</h1>");
+        out.println("<nav>");
+        out.println("<a href='ViewReservationsServlet'>View Reservations</a>");
+        out.println("<a href='Reservation.html'>New Reservation</a>");
+        out.println("<a href='help.html'>Help</a>");
+        out.println("<a href='LogoutServlet'>Logout</a>");
+        out.println("</nav>");
+        out.println("</header>");
+
+        out.println("<div class='container'>");
+
+        // ---------------- Page Title & Back Button ----------------
+        out.println("<h2>Edit Reservation</h2>");
+        out.println("<a href='ViewReservationsServlet' class='back-btn'>← Back to All Reservations</a>");
+
+        // ---------------- Edit Form ----------------
         out.println("<form action='EditReservationServlet' method='post'>");
         out.println("<input type='hidden' name='id' value='" + r.getReservationId() + "'>");
-        out.println("Name: <input type='text' name='name' value='" + r.getGuestName() + "' required><br><br>");
-        out.println("Address: <input type='text' name='address' value='" + r.getAddress() + "' required><br><br>");
-        out.println("Contact: <input type='text' name='contact' value='" + r.getContact() + "' required><br><br>");
-        out.println("Room: <input type='text' name='room' value='" + r.getRoomType() + "' required><br><br>");
-        out.println("Check-In: <input type='date' name='in' value='" + r.getCheckIn() + "' required><br><br>");
-        out.println("Check-Out: <input type='date' name='out' value='" + r.getCheckOut() + "' required><br><br>");
+        out.println("<label>Name:</label>");
+        out.println("<input type='text' name='name' value='" + r.getGuestName() + "' required>");
+        out.println("<label>Address:</label>");
+        out.println("<input type='text' name='address' value='" + r.getAddress() + "' required>");
+        out.println("<label>Contact:</label>");
+        out.println("<input type='text' name='contact' value='" + r.getContact() + "' required>");
+        out.println("<label>Room:</label>");
+        out.println("<input type='text' name='room' value='" + r.getRoomType() + "' required>");
+        out.println("<label>Check-In:</label>");
+        out.println("<input type='date' name='in' value='" + r.getCheckIn() + "' required>");
+        out.println("<label>Check-Out:</label>");
+        out.println("<input type='date' name='out' value='" + r.getCheckOut() + "' required>");
         out.println("<input type='submit' value='Update Reservation'>");
         out.println("</form>");
+
+        out.println("</div>"); // end container
+        out.println("</body></html>");
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        int id = Integer.parseInt(request.getParameter("id"));
-        Reservation r = new Reservation();
-        r.setReservationId(id);
-        r.setGuestName(request.getParameter("name"));
-        r.setAddress(request.getParameter("address"));
-        r.setContact(request.getParameter("contact"));
-        r.setRoomType(request.getParameter("room"));
-        r.setCheckIn(java.time.LocalDate.parse(request.getParameter("in")));
-        r.setCheckOut(java.time.LocalDate.parse(request.getParameter("out")));
-
-        // Recalculate total amount
-        long nights = java.time.temporal.ChronoUnit.DAYS.between(r.getCheckIn(), r.getCheckOut());
-        int pricePerNight = 5000;
-        r.setTotalAmount((int) nights * pricePerNight);
-
-        boolean result = dao.updateReservation(r);
-
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        if (result) {
-            out.println("<h2>Reservation Updated Successfully!</h2>");
-        } else {
-            out.println("<h2>Error Updating Reservation!</h2>");
-        }
-        out.println("<a href='ViewReservationsServlet'>Back to All Reservations</a>");
-    }
 }

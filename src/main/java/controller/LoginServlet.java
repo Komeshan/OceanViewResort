@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("ViewReservationsServlet");
             } else {
                 out.println("<h2>Login Failed! Invalid username or password</h2>");
-                out.println("<a href='login.html'>Try Again</a>");
+                out.println("<a href='index.html'>Try Again</a>");
             }
 
         } catch (SQLException e) {

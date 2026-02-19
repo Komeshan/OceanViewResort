@@ -5,15 +5,25 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<h1>Login</h1>
-<form action="LoginServlet" method="post">
-    <label>Username:</label>
-    <input type="text" name="username" required><br>
 
-    <label>Password:</label>
-    <input type="password" name="password" required><br>
+<header>
+    <h1>Ocean View Resort</h1>
+</header>
 
-    <input type="submit" value="Login">
-</form>
+<div class="container">
+    <div class="card">
+        <h2>Login</h2>
+        <form action="LoginServlet" method="post">
+            <label>Username:</label>
+            <input type="text" name="username" placeholder="Enter your username" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Make Reservation</title>
+    <title>Make Reservation - Ocean View Resort</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <script>
@@ -21,33 +21,44 @@
 </head>
 <body onload="setMinDates()">
 
-<h2>Make Reservation</h2>
+<header>
+    <h1>Ocean View Resort</h1>
+</header>
 
-<form action="ReservationServlet" method="post">
-    Name:
-    <input type="text" name="name" required><br>
+<div class="container">
+    <div class="card">
 
-    Address:
-    <input type="text" name="address" required><br>
+        <a href="ViewReservationsServlet" class="back-btn">Back to Reservations</a>
 
-    Contact:
-    <input type="text" name="contact" required><br>
 
-    Room Type:
-    <select name="room" required>
-        <option value="Single">Single</option>
-        <option value="Double">Double</option>
-        <option value="Suite">Suite</option>
-    </select><br>
+        <h2>Make a New Reservation</h2>
+        <form action="ReservationServlet" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="Guest Name" required>
 
-    Check-In:
-    <input type="date" name="in" id="checkIn" onchange="updateCheckoutMin()" required><br>
+            <label>Address:</label>
+            <input type="text" name="address" placeholder="Address" required>
 
-    Check-Out:
-    <input type="date" name="out" id="checkOut" required><br>
+            <label>Contact:</label>
+            <input type="text" name="contact" placeholder="Phone or Email" required>
 
-    <input type="submit" value="Reserve">
-</form>
+            <label>Room Type:</label>
+            <select name="room" required>
+                <option value="Single">Single</option>
+                <option value="Double">Double</option>
+                <option value="Suite">Suite</option>
+            </select>
+
+            <label>Check-In:</label>
+            <input type="date" name="in" id="checkIn" onchange="updateCheckoutMin()" required>
+
+            <label>Check-Out:</label>
+            <input type="date" name="out" id="checkOut" required>
+
+            <input type="submit" value="Reserve">
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

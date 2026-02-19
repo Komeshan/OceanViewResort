@@ -1,124 +1,371 @@
-/* Reset some defaults */
+/* ---------------- Reset & Base ---------------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f8;
+    background-color: #f0f4f8;
     color: #333;
-    padding: 20px;
+    line-height: 1.6;
 }
 
-/* Header */
+/* ---------------- Header / Navbar ---------------- */
 header {
-    background-color: #2c3e50;
-    color: white;
+    background-color: #005b96;
+    color: #fff;
     padding: 15px 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid #ffd700;
 }
 
 header h1 {
     font-size: 24px;
 }
 
-/* Navigation links */
 nav {
-    margin-top: 10px;
+    display: flex;
+    gap: 15px;
 }
 
 nav a {
+    color: #ffd700;
     text-decoration: none;
-    color: #3498db;
-    margin-right: 20px;
     font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 5px;
+    transition: 0.3s;
 }
 
 nav a:hover {
-    text-decoration: underline;
+    background-color: #003f6b;
+    color: #fff;
 }
 
-/* Forms */
-form {
+/* ---------------- Page Container ---------------- */
+/* ---------------- Page Container (Single Card Pages) ---------------- */
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    padding: 0 15px;
+}
+
+.card {
+    width: 100%;
+    max-width: 500px;     /* perfect size like Edit page */
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+/* ---------------- Forms ---------------- */
+form, .help-section {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+
+form h2 {
+    text-align: center;
+    color: #005b96;
     margin-bottom: 20px;
-    background-color: #ecf0f1;
-    padding: 15px;
-    border-radius: 5px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
 }
 
 input[type="text"],
+input[type="password"],
 input[type="date"],
 select {
-    padding: 6px;
-    margin-right: 10px;
-    border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
     border: 1px solid #ccc;
+    transition: 0.3s;
 }
 
-/* Buttons */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+select:focus {
+    border-color: #005b96;
+    outline: none;
+}
+
+/* ---------------- Buttons ---------------- */
 input[type="submit"],
-button {
-    padding: 6px 12px;
-    background-color: #3498db;
+button,
+a.button,
+a.back-btn {
+    padding: 10px 20px;
+    background-color: #005b96;
+    color: #fff;
     border: none;
-    color: white;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 14px;
     cursor: pointer;
-    font-weight: bold;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
 }
 
 input[type="submit"]:hover,
-button:hover {
-    background-color: #2980b9;
+button:hover,
+a.button:hover,
+a.back-btn:hover {
+    background-color: #003f6b;
 }
 
-/* Table */
+/* ---------------- Small Buttons (Edit/Delete) ---------------- */
+.btn-small {
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 4px;
+    margin-right: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+td a.btn-small {
+    display: inline-block;
+    margin-right: 5px;
+    line-height: 1.5;       /* aligns buttons vertically */
+}
+
+.btn-edit {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background-color: #1e7e34;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background-color: #a71d2a;
+}
+
+/* ---------------- Tables ---------------- */
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-    border-radius: 5px;
+    background-color: #fff;
+    border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-top: 20px;
 }
 
 th, td {
-    padding: 12px;
+    padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #2c3e50;
-    color: white;
+    background-color: #005b96;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
 }
 
 tr:hover {
-    background-color: #f2f2f2;
+    background-color: #d0e4f5;
 }
 
-h2 {
-    margin: 10px 0;
-}
-
-.help-section {
+/* ---------------- Search Form ---------------- */
+form.search-form {
     background-color: #fff;
     padding: 15px;
-    border-radius: 5px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+form.search-form input[type="text"],
+form.search-form input[type="date"] {
+    flex: 1;
+    min-width: 120px;
+}
+
+form.search-form input[type="submit"] {
+    padding: 10px 20px;
+    height: 40px;       /* same as inputs */
+    margin-top: 0;      /* remove misalignment */
+    align-self: center;
+}
+
+/* ---------------- Help Section ---------------- */
+.help-section {
     margin-top: 20px;
 }
 
 .help-section h2 {
-    color: #2c3e50;
+    color: #005b96;
+    margin-bottom: 15px;
 }
 
 .help-section ul {
     margin-left: 20px;
-    margin-top: 10px;
+    list-style-type: disc;
 }
 
 .help-section li {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+/* ---------------- Alerts ---------------- */
+h2.success {
+    color: green;
+}
+
+h2.error {
+    color: red;
+}
+
+/* ---------------- Misc ---------------- */
+a.back-btn {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+/* ---------------- Responsive ---------------- */
+@media(max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    form.search-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* ---------- Header & welcome tweaks ---------- */
+header h3 {
+    font-weight: normal;
+    color: #003f6b;
+    margin-top: 5px;
+}
+
+/* ========== VIEW RESERVATION FIX ========== */
+
+.view-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    gap: 25px;
+}
+
+/* Search Bar */
+.search-box {
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Result Card */
+.result-card {
+    width: 100%;
+    max-width: 700px;
+
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* ========== VIEW RESERVATION LAYOUT ========== */
+
+/* ========== VIEW RESERVATIONS ALIGNMENT FIX ========== */
+
+.view-container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Common width for title, search, table */
+.view-title,
+form.search-form,
+.view-container table {
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Page Title */
+.view-title {
+    text-align: left;
+    color: #005b96;
+    margin-bottom: 5px;
+}
+
+/* Search Bar */
+form.search-form {
+    background-color: #fff;
+    padding: 15px;
+
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Inputs grow evenly */
+form.search-form input[type="text"],
+form.search-form input[type="date"] {
+    flex: 1;
+    min-width: 140px;
+}
+
+/* Search button */
+form.search-form input[type="submit"] {
+    height: 40px;
+    padding: 0 20px;
+    margin-top: 0;
 }
