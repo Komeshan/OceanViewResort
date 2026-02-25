@@ -220,7 +220,6 @@ public class ReservationDAO {
 
     // ================= DELETE =================
     public boolean deleteReservation(int id) {
-
         String sql = "DELETE FROM Reservations WHERE reservation_id=?";
 
         try {
@@ -229,8 +228,11 @@ public class ReservationDAO {
 
             stmt.setInt(1, id);
 
-            stmt.executeUpdate();
-            return true;
+            // Capture the number of rows actually deleted
+            int rowsDeleted = stmt.executeUpdate();
+
+            // Return true only if 1 or more rows were removed
+            return rowsDeleted > 0;
 
         } catch (Exception e) {
             e.printStackTrace();
